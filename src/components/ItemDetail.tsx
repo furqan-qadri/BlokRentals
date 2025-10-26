@@ -1,19 +1,35 @@
 import { useState } from "react";
 
-interface ItemDetailProps {
-  item: {
-    id: number;
-    name: string;
-    pricePerDay: number;
-    deposit: number;
-    image: string;
-    category: string;
-    description: string;
-  };
-  onBack: () => void;
+interface RentalItem {
+  id: number;
+  name: string;
+  pricePerDay: number;
+  deposit: number;
+  image: string;
+  category: string;
+  description: string;
 }
 
-export default function ItemDetail({ item, onBack }: ItemDetailProps) {
+interface CheckoutData {
+  item: RentalItem;
+  startDate: string;
+  endDate: string;
+  days: number;
+  rentalCost: number;
+  totalCost: number;
+}
+
+interface ItemDetailProps {
+  item: RentalItem;
+  onBack: () => void;
+  onProceedToCheckout: (data: CheckoutData) => void;
+}
+
+export default function ItemDetail({
+  item,
+  onBack,
+  onProceedToCheckout,
+}: ItemDetailProps) {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -177,6 +193,16 @@ export default function ItemDetail({ item, onBack }: ItemDetailProps) {
               {/* Rent Now Button */}
               <button
                 disabled={!startDate || !endDate || days === 0}
+                onClick={() =>
+                  onProceedToCheckout({
+                    item,
+                    startDate,
+                    endDate,
+                    days,
+                    rentalCost,
+                    totalCost,
+                  })
+                }
                 className="w-full bg-gray-900 text-white py-4 rounded-lg text-lg font-semibold hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 Rent Now
