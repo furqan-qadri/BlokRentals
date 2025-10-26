@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import RentalGrid from "./components/RentalGrid";
 import ItemDetail from "./components/ItemDetail";
 import Checkout from "./components/Checkout";
+import AdminDashboard from "./components/AdminDashboard";
 
 export interface RentalItem {
   id: number;
@@ -24,7 +26,7 @@ export interface CheckoutData {
   totalCost: number;
 }
 
-export default function App() {
+function HomePage() {
   const [selectedItem, setSelectedItem] = useState<RentalItem | null>(null);
   const [checkoutData, setCheckoutData] = useState<CheckoutData | null>(null);
 
@@ -47,8 +49,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
+    <>
       {checkoutData ? (
         <Checkout
           item={checkoutData.item}
@@ -71,6 +72,18 @@ export default function App() {
           <RentalGrid onItemClick={handleItemClick} />
         </div>
       )}
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+      </Routes>
     </div>
   );
 }

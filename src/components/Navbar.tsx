@@ -1,11 +1,19 @@
+import { Link, useLocation } from "react-router-dom";
+
 export default function Navbar() {
+  const location = useLocation();
+
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-full mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-gray-900">BlokRent</h1>
+            <Link to="/">
+              <h1 className="text-2xl font-bold text-gray-900 cursor-pointer hover:text-gray-700 transition-colors">
+                BlokRent
+              </h1>
+            </Link>
           </div>
 
           {/* Search Bar */}
@@ -34,6 +42,16 @@ export default function Navbar() {
 
           {/* Profile Circle */}
           <div className="flex items-center gap-4">
+            <Link
+              to={location.pathname === "/admin" ? "/" : "/admin"}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                location.pathname === "/admin"
+                  ? "bg-gray-900 text-white hover:bg-gray-800"
+                  : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+              }`}
+            >
+              {location.pathname === "/admin" ? "Browse Items" : "Admin"}
+            </Link>
             <button className="p-2 hover:bg-gray-100 rounded-lg">
               <svg
                 className="h-6 w-6 text-gray-600"
