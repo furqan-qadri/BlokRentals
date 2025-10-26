@@ -26,7 +26,7 @@ const initialRentals: Rental[] = [
     endDate: "2025-10-28",
     status: "active",
     rentalCost: 360,
-    deposit: 1000,
+    deposit: 100,
   },
   {
     id: 2,

@@ -206,7 +206,7 @@ export default function ItemDetail({
                 }
                 className="w-full bg-gray-900 text-white py-4 rounded-lg text-lg font-semibold hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
-                Rent Now
+                Lock Deposit
               </button>
 
               {(!startDate || !endDate) && (

@@ -101,7 +101,7 @@ View the contract on Concordium testnet—**100 CCD locked**. Neither owner nor 
 
 #### Balance Before Deposit
 
-![Wallet balance before making deposit](docs/images/deposit-rent-before balance.jpg)
+![Wallet balance before making deposit](docs/images/deposit-rent-before-balance.jpg)
 
 User's wallet balance before locking funds in escrow.
 
@@ -115,15 +115,13 @@ Funds deducted and securely locked in the smart contract—**no one has access u
 
 ### 7️⃣ Rental Complete
 
-![Alt text: Timeline showing rental period ended, item returned in good condition, both parties satisfied]
-
 Item returned on time, in good condition. Both parties ready to finalize.
 
 ---
 
 ### 8️⃣ Owner Releases Deposit
 
-![Alt text: Admin dashboard showing active rentals with "Release Deposit" button next to completed rental entry]
+![Admin dashboard showing active rentals with "Release Deposit" button next to completed rental entry](docs/images/admin-dashboard.jpg)
 
 Owner logs into admin panel and clicks **Release Deposit**.
 
@@ -131,7 +129,7 @@ Owner logs into admin panel and clicks **Release Deposit**.
 
 ### 9️⃣ Confirm Release
 
-![Alt text: Concordium wallet popup asking owner to confirm deposit release transaction to renter's address]
+![Concordium wallet popup asking owner to confirm deposit release transaction to renter's address](docs/images/deposit-will-be-returned.jpg)
 
 Owner signs the release transaction in their wallet.
 
@@ -139,9 +137,15 @@ Owner signs the release transaction in their wallet.
 
 ### 🔟 Refund Complete. No back and forth. Secure and automatic.
 
-![Alt text: Success confirmation showing "Deposit Released" with transaction hash and funds returning to renter's wallet address]
+![Success confirmation showing "Deposit Released" with transaction hash and funds returning to renter's wallet address](docs/images/deposit-returned.jpg)
 
 **Deposit refunded!** Renter receives their 100 CCD back. Transaction complete.
+
+#### Balance After Refund - Funds Restored
+
+![Wallet balance showing funds restored after deposit release](docs/images/depsotit-rent-after-balance.jpg)
+
+Comparing with the [balance after initial deposit](#balance-after-deposit), you can see the locked funds have been **fully restored** to the renter's wallet. The escrow cycle is complete—**transparent, trustless, and automatic**.
 
 ---
 
