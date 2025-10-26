@@ -39,7 +39,7 @@ const rentalItems: RentalItem[] = [
     id: 3,
     name: "Tesla Model 3",
     pricePerDay: 120,
-    deposit: 1000,
+    deposit: 100,
     image:
       "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400&h=300&fit=crop",
     category: "Car",
