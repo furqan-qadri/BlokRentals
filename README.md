@@ -2,7 +2,7 @@
 
 **Secure peer-to-peer rentals powered by blockchain escrow deposit service**
 
-🎥 **[Watch Video Demo](https://drive.google.com/file/d/10nBUOnIcHDWMd6CWunp745hG4DJ1W_xf/view?usp=sharing)**
+🎥 **Video Demo:** https://drive.google.com/file/d/10nBUOnIcHDWMd6CWunp745hG4DJ1W_xf/view?usp=sharing
 
 ![BlokRent marketplace showing rental items like cameras, bikes, and tools with daily rates and security deposit amounts displayed below each item](docs/images/1-store.jpg)
 
