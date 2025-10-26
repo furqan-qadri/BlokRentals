@@ -45,7 +45,6 @@ export default function ItemDetail({
 
   const days = calculateDays();
   const rentalCost = days * item.pricePerDay;
-  const totalCost = rentalCost + item.deposit;
 
   return (
     <div className="flex-1 p-6 bg-gray-50">
@@ -162,29 +161,19 @@ export default function ItemDetail({
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-base text-gray-600">
-                      {item.pricePerDay} <span className="text-xs">CCD</span> ×{" "}
-                      {days} day
-                      {days !== 1 ? "s" : ""}
+                      Rental Cost ({days} day{days !== 1 ? "s" : ""})
                     </span>
                     <span className="text-lg font-medium text-gray-900">
                       {rentalCost} <span className="text-sm">CCD</span>
                     </span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-base text-gray-600">
-                      Refundable Deposit
-                    </span>
-                    <span className="text-lg font-medium text-gray-900">
-                      {item.deposit} <span className="text-sm">CCD</span>
-                    </span>
-                  </div>
                   <div className="pt-3 border-t border-gray-200">
                     <div className="flex justify-between items-center">
                       <span className="text-xl font-semibold text-gray-900">
-                        Total
+                        Deposit Amount
                       </span>
                       <span className="text-2xl font-bold text-gray-900">
-                        {totalCost} <span className="text-base">CCD</span>
+                        {item.deposit} <span className="text-base">CCD</span>
                       </span>
                     </div>
                   </div>
@@ -201,7 +190,7 @@ export default function ItemDetail({
                     endDate,
                     days,
                     rentalCost,
-                    totalCost,
+                    totalCost: item.deposit,
                   })
                 }
                 className="w-full bg-gray-900 text-white py-4 rounded-lg text-lg font-semibold hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"

@@ -25,7 +25,6 @@ export default function Checkout({
   endDate,
   days,
   rentalCost,
-  totalCost,
   onBack,
 }: CheckoutProps) {
   // State for wallet connection
@@ -100,8 +99,8 @@ export default function Checkout({
     setTxHash(null);
 
     try {
-      // Convert USD to CCD (for demo, using 1:1 ratio - adjust as needed)
-      const amountCcd = totalCost;
+      // Lock only the deposit amount
+      const amountCcd = item.deposit;
 
       if (!Number.isFinite(amountCcd) || amountCcd <= 0) {
         throw new Error("Invalid amount");
@@ -386,28 +385,19 @@ export default function Checkout({
             <div className="space-y-3">
               <div className="flex justify-between items-center">
                 <span className="text-base text-gray-600">
-                  {item.pricePerDay} <span className="text-xs">CCD</span> ×{" "}
-                  {days} day{days !== 1 ? "s" : ""}
+                  Rental Cost ({days} day{days !== 1 ? "s" : ""})
                 </span>
                 <span className="text-lg font-medium text-gray-900">
                   {rentalCost} <span className="text-sm">CCD</span>
                 </span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-base text-gray-600">
-                  Refundable Deposit
-                </span>
-                <span className="text-lg font-medium text-gray-900">
-                  {item.deposit} <span className="text-sm">CCD</span>
-                </span>
-              </div>
               <div className="pt-3 border-t border-gray-200">
                 <div className="flex justify-between items-center">
                   <span className="text-xl font-semibold text-gray-900">
-                    Total to Lock
+                    Deposit Amount
                   </span>
                   <span className="text-2xl font-bold text-gray-900">
-                    {totalCost} <span className="text-base">CCD</span>
+                    {item.deposit} <span className="text-base">CCD</span>
                   </span>
                 </div>
               </div>
@@ -552,7 +542,7 @@ export default function Checkout({
                       {days !== 1 ? "s" : ""}
                     </p>
                     <p>
-                      <strong>Total Locked:</strong> {totalCost}{" "}
+                      <strong>Deposit Locked:</strong> {item.deposit}{" "}
                       <span className="text-xs">CCD</span>
                     </p>
                   </div>
