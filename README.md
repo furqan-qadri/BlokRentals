@@ -47,7 +47,7 @@ No middleman. No hidden fees. Just pure, auditable trust.
 
 ### 1️⃣ Browse & Select
 
-![Alt text: BlokRent marketplace showing rental items like cameras, bikes, and tools with daily rates and security deposit amounts displayed below each item]
+![BlokRent marketplace showing rental items like cameras, bikes, and tools with daily rates and security deposit amounts displayed below each item](docs/images/1-store.jpg)
 
 Users browse available items with clear pricing: daily rate + refundable deposit.
 
@@ -55,7 +55,7 @@ Users browse available items with clear pricing: daily rate + refundable deposit
 
 ### 2️⃣ Choose Rental Period
 
-![Alt text: Item detail page showing a camera with calendar date picker for selecting start and end dates, with calculated total cost breakdown]
+![Item detail page showing a camera with calendar date picker for selecting start and end dates, with calculated total cost breakdown](docs/images/2-deposit.jpg)
 
 Select start and end dates. The system calculates total rental cost + deposit automatically.
 
@@ -65,13 +65,13 @@ Select start and end dates. The system calculates total rental cost + deposit au
 
 **3a. New User (First Time)**
 
-![Alt text: Checkout page showing "Connect Wallet" button prominently displayed next to wallet status indicator]
+![Checkout page showing "Connect Wallet" button prominently displayed next to wallet status indicator](docs/images/4-wallet-not.jpg)
 
 First-time users connect their Concordium Browser Wallet with a single click.
 
 **3b. Returning User**
 
-![Alt text: Checkout page showing wallet already connected with address displayed and "Connected" status in green]
+![Checkout page showing wallet already connected with address displayed and "Connected" status in green](docs/images/3-wallet-connected.jpg)
 
 Returning users see their wallet pre-connected—just review and confirm.
 
@@ -79,7 +79,7 @@ Returning users see their wallet pre-connected—just review and confirm.
 
 ### 4️⃣ Sign Transaction Prompt from Wallet
 
-![Alt text: Concordium wallet browser extension popup showing transaction details with amount and smart contract address, prompting user to sign]
+![Concordium wallet browser extension popup showing transaction details with amount and smart contract address, prompting user to sign](docs/images/5-sign-on-request.jpg)
 
 Concordium wallet prompts for signature. Review the escrow contract details and confirm.
 
@@ -87,17 +87,29 @@ Concordium wallet prompts for signature. Review the escrow contract details and 
 
 ### 5️⃣ Deposit Locked securely on-chain.
 
-![Alt text: Success modal showing "Deposit Locked!" message with smart contract ID displayed and rental confirmation details]
+![Success modal showing "Deposit Locked!" message with smart contract ID displayed and rental confirmation details](docs/images/deposit_locked.jpg)
 
 Transaction confirmed! Your deposit is now secured in the smart contract.
 
 ---
 
-### 6️⃣ On-Chain Verification
+### Note: On-Chain Verification
 
-![Alt text: Concordium testnet explorer showing smart contract with 100 CCD locked balance, proving funds are inaccessible to both parties]
+![Concordium testnet explorer showing smart contract with 100 CCD locked balance, proving funds are inaccessible to both parties](docs/images/5a-contract-filled.jpg)
 
 View the contract on Concordium testnet—**100 CCD locked**. Neither owner nor renter can touch it.
+
+#### Balance Before Deposit
+
+![Wallet balance before making deposit](docs/images/deposit-rent-before balance.jpg)
+
+User's wallet balance before locking funds in escrow.
+
+#### Balance After Deposit
+
+![Wallet balance after deposit has been locked in smart contract](docs/images/depsotit-rent-after-balance.jpg)
+
+Funds deducted and securely locked in the smart contract—**no one has access until conditions are met**.
 
 ---
 

@@ -62,7 +62,7 @@ const initialRentals: Rental[] = [
 
 // Generate a mock contract ID
 const generateContractId = () => {
-  return "12285";
+  return "12292";
 };
 
 export default function AdminDashboard() {
