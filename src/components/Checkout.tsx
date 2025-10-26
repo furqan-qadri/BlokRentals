@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { detectConcordiumProvider } from "@concordium/browser-wallet-api-helpers";
 import { AccountTransactionType, CcdAmount } from "@concordium/web-sdk";
 
@@ -28,8 +28,45 @@ export default function Checkout({
   totalCost,
   onBack,
 }: CheckoutProps) {
-  // Mock wallet address
-  const walletAddress = "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb8";
+  // State for wallet connection
+  const [walletAddress, setWalletAddress] = useState<string>("");
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [connectionError, setConnectionError] = useState<string>("");
+
+  // Connect to wallet on component mount
+  useEffect(() => {
+    connectWallet();
+  }, []);
+
+  const connectWallet = async () => {
+    try {
+      setIsConnecting(true);
+      setConnectionError("");
+
+      // Detect the Concordium wallet extension
+      const provider = await detectConcordiumProvider();
+
+      // Connect to the wallet
+      await provider.connect();
+
+      // Get the selected account
+      const account = await provider.getMostRecentlySelectedAccount();
+
+      if (account && typeof account === "string") {
+        setWalletAddress(account);
+        console.log("Connected wallet:", account);
+      } else {
+        setConnectionError("No account selected in wallet");
+      }
+    } catch (error) {
+      console.error("Failed to connect wallet:", error);
+      setConnectionError(
+        "Failed to connect to Concordium wallet. Please make sure the extension is installed and unlocked."
+      );
+    } finally {
+      setIsConnecting(false);
+    }
+  };
 
   // State for transaction status and modal
   const [showModal, setShowModal] = useState(false);
@@ -59,7 +96,7 @@ export default function Checkout({
   const handleConfirm = async () => {
     setShowModal(true);
     setModalStatus("verifying");
-    setStatusMessage("🔌 Connecting to Concordium wallet...");
+    setStatusMessage("🔌 Preparing transaction...");
     setTxHash(null);
 
     try {
@@ -70,6 +107,12 @@ export default function Checkout({
         throw new Error("Invalid amount");
       }
 
+      if (!walletAddress) {
+        throw new Error(
+          "Wallet not connected. Please connect your wallet first."
+        );
+      }
+
       const provider: any = await detectConcordiumProvider();
       if (!provider) {
         throw new Error(
@@ -77,30 +120,7 @@ export default function Checkout({
         );
       }
 
-      const connection: any = await provider.connect();
-
-      // Extract account address
-      let accountAddress: string | undefined;
-
-      if (typeof connection === "string") {
-        accountAddress = connection;
-      } else if (connection?.genesisHash) {
-        const account = await provider.getMostRecentlySelectedAccount();
-        accountAddress = account;
-      } else if (connection?.accountAddress) {
-        accountAddress = connection.accountAddress;
-      } else if (connection?.account) {
-        accountAddress = connection.account;
-      } else if (Array.isArray(connection) && connection.length > 0) {
-        accountAddress = connection[0];
-      }
-
-      if (!accountAddress) {
-        console.error("Failed to extract account. Connection:", connection);
-        throw new Error(
-          "No account returned from wallet. Please ensure your wallet is connected."
-        );
-      }
+      const accountAddress = walletAddress;
 
       console.log("Using account address:", accountAddress);
       console.log("Locking amount:", amountCcd, "CCD");
@@ -219,14 +239,25 @@ export default function Checkout({
               Concordium Wallet Status
             </h2>
             <button
-              disabled
-              className="px-4 py-2 bg-gray-300 text-gray-600 rounded-lg text-sm font-medium cursor-not-allowed"
+              onClick={connectWallet}
+              disabled={isConnecting}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                walletAddress
+                  ? "bg-green-100 text-green-700 border border-green-300"
+                  : isConnecting
+                  ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                  : "bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+              }`}
             >
-              Connected
+              {walletAddress
+                ? "Connected"
+                : isConnecting
+                ? "Connecting..."
+                : "Connect"}
             </button>
           </div>
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-            <div className="flex items-center">
+            <div className="flex items-center flex-1">
               <div className="h-10 w-10 rounded-full bg-gray-900 flex items-center justify-center mr-3">
                 <svg
                   className="h-6 w-6 text-white"
@@ -242,14 +273,60 @@ export default function Checkout({
                   />
                 </svg>
               </div>
-              <div>
+              <div className="flex-1">
                 <p className="text-sm text-gray-500">Wallet Address</p>
-                <p className="text-base font-medium text-gray-900">
-                  {formatAddress(walletAddress)}
-                </p>
+                {isConnecting ? (
+                  <div className="flex items-center gap-2">
+                    <div className="animate-spin h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full"></div>
+                    <p className="text-base font-medium text-blue-600">
+                      Connecting...
+                    </p>
+                  </div>
+                ) : connectionError ? (
+                  <div className="space-y-1">
+                    <p className="text-base font-medium text-red-600">
+                      Wallet Not Found
+                    </p>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <a
+                        href="https://chrome.google.com/webstore/detail/concordium-wallet/mnnkpffndmickbiakofclnpoiajlegmg"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-blue-600 hover:text-blue-800 underline"
+                      >
+                        Install Extension
+                      </a>
+                      <span className="text-gray-400">|</span>
+                      <button
+                        onClick={connectWallet}
+                        className="text-sm text-blue-600 hover:text-blue-800 underline"
+                      >
+                        Retry
+                      </button>
+                    </div>
+                  </div>
+                ) : walletAddress ? (
+                  <p className="text-base font-medium text-gray-900">
+                    {formatAddress(walletAddress)}
+                  </p>
+                ) : (
+                  <p className="text-base font-medium text-gray-500">
+                    Not Connected
+                  </p>
+                )}
               </div>
             </div>
-            <div className="h-3 w-3 rounded-full bg-green-500"></div>
+            <div
+              className={`h-3 w-3 rounded-full ${
+                isConnecting
+                  ? "bg-yellow-500"
+                  : connectionError
+                  ? "bg-red-500"
+                  : walletAddress
+                  ? "bg-green-500"
+                  : "bg-gray-400"
+              }`}
+            ></div>
           </div>
         </div>
 
@@ -371,9 +448,18 @@ export default function Checkout({
         {/* Confirm Button */}
         <button
           onClick={handleConfirm}
-          className="w-full bg-gray-900 text-white py-5 rounded-lg text-xl font-semibold hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl"
+          disabled={!walletAddress || isConnecting}
+          className={`w-full py-5 rounded-lg text-xl font-semibold transition-colors shadow-lg hover:shadow-xl ${
+            !walletAddress || isConnecting
+              ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+              : "bg-gray-900 text-white hover:bg-gray-800"
+          }`}
         >
-          Lock Deposit
+          {isConnecting
+            ? "Connecting..."
+            : !walletAddress
+            ? "Connect Wallet First"
+            : "Lock Deposit"}
         </button>
 
         <p className="text-center text-sm text-gray-500 mt-4">
@@ -439,7 +525,7 @@ export default function Checkout({
 
               {/* Transaction Details */}
               {txHash && (
-                <div className="mb-6 space-y-3">
+                <div className="mb-6">
                   <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
                     <p className="text-sm text-gray-500 mb-2">
                       Smart Contract ID
@@ -447,22 +533,6 @@ export default function Checkout({
                     <code className="text-xs text-gray-800 break-all block font-semibold">
                       {contractIndex},{contractSubindex}
                     </code>
-                  </div>
-                  <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                    <p className="text-sm text-gray-500 mb-2">
-                      Transaction Hash
-                    </p>
-                    <code className="text-xs text-gray-800 break-all block">
-                      {txHash}
-                    </code>
-                    {/* <a
-                      href={`https://dashboard.concordium.com/explorer/transaction/${txHash}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-blue-600 hover:text-blue-800 mt-2 inline-block"
-                    >
-                      View on Explorer →
-                    </a> */}
                   </div>
                 </div>
               )}
