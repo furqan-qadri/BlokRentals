@@ -165,7 +165,6 @@ export default function Checkout({
       setTxHash(hash);
       console.log("Transaction hash:", hash);
 
-      // Show verifying status for 6 seconds before confirming
       setStatusMessage("⏳ Verifying transaction on the blockchain...");
 
       await new Promise((resolve) => setTimeout(resolve, 6000));
@@ -310,10 +309,11 @@ export default function Checkout({
             <div className="space-y-3">
               <div className="flex justify-between items-center">
                 <span className="text-base text-gray-600">
-                  ${item.pricePerDay} × {days} day{days !== 1 ? "s" : ""}
+                  {item.pricePerDay} <span className="text-xs">CCD</span> ×{" "}
+                  {days} day{days !== 1 ? "s" : ""}
                 </span>
                 <span className="text-lg font-medium text-gray-900">
-                  ${rentalCost}
+                  {rentalCost} <span className="text-sm">CCD</span>
                 </span>
               </div>
               <div className="flex justify-between items-center">
@@ -321,7 +321,7 @@ export default function Checkout({
                   Refundable Deposit
                 </span>
                 <span className="text-lg font-medium text-gray-900">
-                  ${item.deposit}
+                  {item.deposit} <span className="text-sm">CCD</span>
                 </span>
               </div>
               <div className="pt-3 border-t border-gray-200">
@@ -330,7 +330,7 @@ export default function Checkout({
                     Total to Lock
                   </span>
                   <span className="text-2xl font-bold text-gray-900">
-                    ${totalCost}
+                    {totalCost} <span className="text-base">CCD</span>
                   </span>
                 </div>
               </div>
@@ -358,8 +358,10 @@ export default function Checkout({
                   Your deposit will be returned
                 </p>
                 <p className="text-sm text-blue-800 mt-1">
-                  The deposit of ${item.deposit} will be automatically refunded
-                  to your wallet when you return the item in good condition.
+                  The deposit of {item.deposit}{" "}
+                  <span className="text-xs">CCD</span> will be automatically
+                  refunded to your wallet when you return the item in good
+                  condition.
                 </p>
               </div>
             </div>
@@ -480,7 +482,8 @@ export default function Checkout({
                       {days !== 1 ? "s" : ""}
                     </p>
                     <p>
-                      <strong>Total Locked:</strong> ${totalCost} CCD
+                      <strong>Total Locked:</strong> {totalCost}{" "}
+                      <span className="text-xs">CCD</span>
                     </p>
                   </div>
                 </div>

@@ -189,13 +189,13 @@ export default function RentalGrid({ onItemClick }: RentalGridProps) {
                 <div className="flex justify-between items-center">
                   <span className="text-base text-gray-600">Price/day</span>
                   <span className="text-2xl font-bold text-gray-900">
-                    ${item.pricePerDay}
+                    {item.pricePerDay} <span className="text-base">CCD</span>
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-base text-gray-600">Deposit</span>
                   <span className="text-lg font-medium text-gray-700">
-                    ${item.deposit}
+                    {item.deposit} <span className="text-sm">CCD</span>
                   </span>
                 </div>
               </div>

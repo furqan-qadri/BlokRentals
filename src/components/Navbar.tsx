@@ -5,7 +5,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-gray-900">BlockRent</h1>
+            <h1 className="text-2xl font-bold text-gray-900">BlokRent</h1>
           </div>
 
           {/* Search Bar */}

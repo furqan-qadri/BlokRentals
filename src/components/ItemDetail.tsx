@@ -110,13 +110,13 @@ export default function ItemDetail({
                 <div className="flex justify-between items-center mb-3">
                   <span className="text-lg text-gray-600">Price per day</span>
                   <span className="text-2xl font-bold text-gray-900">
-                    ${item.pricePerDay}
+                    {item.pricePerDay} <span className="text-base">CCD</span>
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-lg text-gray-600">Deposit</span>
                   <span className="text-xl font-medium text-gray-700">
-                    ${item.deposit}
+                    {item.deposit} <span className="text-sm">CCD</span>
                   </span>
                 </div>
               </div>
@@ -162,11 +162,12 @@ export default function ItemDetail({
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-base text-gray-600">
-                      ${item.pricePerDay} × {days} day
+                      {item.pricePerDay} <span className="text-xs">CCD</span> ×{" "}
+                      {days} day
                       {days !== 1 ? "s" : ""}
                     </span>
                     <span className="text-lg font-medium text-gray-900">
-                      ${rentalCost}
+                      {rentalCost} <span className="text-sm">CCD</span>
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -174,7 +175,7 @@ export default function ItemDetail({
                       Refundable Deposit
                     </span>
                     <span className="text-lg font-medium text-gray-900">
-                      ${item.deposit}
+                      {item.deposit} <span className="text-sm">CCD</span>
                     </span>
                   </div>
                   <div className="pt-3 border-t border-gray-200">
@@ -183,7 +184,7 @@ export default function ItemDetail({
                         Total
                       </span>
                       <span className="text-2xl font-bold text-gray-900">
-                        ${totalCost}
+                        {totalCost} <span className="text-base">CCD</span>
                       </span>
                     </div>
                   </div>
