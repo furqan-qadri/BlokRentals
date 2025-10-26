@@ -76,7 +76,7 @@ export default function Checkout({
   const [txHash, setTxHash] = useState<string | null>(null);
 
   // Contract details - adjust these for your actual contract
-  const contractIndex = 12292;
+  const contractIndex = 12296;
   const contractSubindex = 0;
 
   const formatAddress = (address: string) => {
