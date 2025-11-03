@@ -67,8 +67,11 @@ export default function Checkout({
     }
   };
 
+
   // State for transaction status and modal
   const [showModal, setShowModal] = useState(false);
+
+  
   const [modalStatus, setModalStatus] = useState<
     "verifying" | "verified" | "error"
   >("verifying");
